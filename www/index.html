@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.3.2.css" />
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile.squareui.css" />
+  
+  
+  <script src="js/jquery.js"></script>
+  <script src="js/jqm.min.js"></script>
+  
+	<script type="text/javascript">
+		function setCookie(c_name,value,exdays = 90)
+		{
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+		document.cookie=c_name + "=" + c_value;
+		}
+        function onSuccess(data, status)
+        {
+            data = $.trim(data);
+			setCookie("user", "registered");
+			$.mobile.navigate( "#home" );
+        }
+  
+        function onError(data, status)
+        {
+            // handle an error
+        }        
+  
+        $(document).ready(function() {
+            $("#submit").click(function(){
+  
+                var formData = $("enter").serialize();
+  
+                $.ajax({
+                    type: "POST",
+                    url: "test.php",
+                    cache: false,
+                    data: formData,
+                    success: onSuccess,
+                    error: onError
+                });
+  
+                return false;
+            });
+        });
+   	}); //God dey
+	</script>
+	
+  <style rel="css">
+	@font-face {
+	font-family: 'pneuwide';
+	src: url('http://fontsforweb.com/public/fonts/939/pneuwide.eot');
+	src: local('pneuwide'), url('http://fontsforweb.com/public/fonts/939/pneuwide.ttf') format('truetype');
+	}
+	.fontsforweb_fontid_939 {
+		font-family: 'pneuwide' !important;
+	}
+	#splash{
+		background:url('bg.png') no-repeat center center;
+		min-height:100%;
+		background-position:fixed;
+		background-size:cover;
+	}
+	</style>
+</head>
+<body>
+	<div data-role="page" id="splash">
+	<div data-role="content" >
+	<div  style="color:#fff; margin-top:30%; font-size:0.9em; font-style:bold; text-align:center">
+	<h2>VotIQ&trade; helps you become an informed voter in <span> 10 minutes</span>.<br>
+	<span style=" text-align:center; font-size:0.6em; color:#eee">See your candidates &bull; Compare issue positions &bull; Find your polling place</span></h2>
+	</div>
+		<div>
+      <ul data-role="listview" data-inset="true">
+        <li data-role="list-divider" style="background:#2299ff; border:#368dd0" data-theme="d">To start, fill the form below...</li>
+		<li>
+		<form action="" id="enter" method="post">
+		<input type="search"  data-theme="b" name="username" placeholder="Username..." autofocus />
+		<input type="password"  data-theme="b" name="pass" placeholder="Password..." required/>
+		<input type="search"  data-theme="b" name="tel" placeholder="Phone Number..." required/>
+		<fieldset>
+        <div><button type="submit" data-icon="flat-lock" name="send" id="submit" value="yes" data-theme="d">Start</button></div>
+		</form>
+	  </li>
+      </ul>
+	  </div>
+	</div>
+    <div data-role="footer" data-position="fixed">
+			<h4 style="font-style:bold;">&copy; <script rel="javascript"> var g = new Date(); document.write(g.getFullYear());</script>, <span style="color:#13aa93">Team Green</span>
+			<a href="#home" data-role="button" data-icon="info" data-iconpos="notext" data-transition="slidedown"  class="ui-btn-left">About</a>
+			<a href="#help" data-role="button" data-icon="flat-bubble" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-right">Help</a>
+	</div>
+	</div>
+	<!--Internals -->
+	
+	<div data-role="page" id="home" >
+	
+		<div data-role="header"  data-position="fixed" style="overflow:hidden;">
+			<h4 style="font-style:bold;">VotIQ&trade; 
+			<a href="#info" data-role="button" data-icon="info" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-left">About</a>
+			<a href="#help" data-role="button" data-icon="alert" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-right">Help</a>
+			</h4>
+			<!--Nav Bar -->
+			<div data-role="navbar" data-iconpos="left">
+				<ul>
+					<li ><a  href="#home" data-icon="flat-home" title="View location" title="Find the Location your are at right now" class="ui-state-persist">Home</a></li>
+					<li ><a href="#profile" href="#add" data-icon="flat-cmd" onclick="currentLoc()" title="Track your current Location" data-transition="slide" >Profiles</a></li>
+					<li ><a href="#polls" data-transition="slide"  data-icon="flat-new" data-iconpos="notext">Polls</a></li>
+					<li ><a href="#forum" data-transition="slide" data-icon="flat-location">Forum</a></li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<div data-role="content" style="margin-top:10px" >
+			
+      <ul  data-role="listview" data-filter-theme="e" data-autodividers="true" data-filter="true" data-filter-placeholder="Filter News items..." data-inset="true">
+        <li data-role="list-divider" data-theme="d">List Header</li>
+        <li>Read-only list item</li>
+        <li><a href="#">Linked list item</a></li>
+      </ul>
+		</div>
+    <div data-role="footer" data-position="fixed">
+			<h4 style="font-style:bold;">&copy; <script rel="javascript"> var g = new Date(); document.write(g.getFullYear());</script>, <span style="color:#13aa93">Team Green</span>
+			<a href="#settings" data-role="button" data-icon="flat-settings" data-iconpos="notext" data-transition="slidedown"  class="ui-btn-right">Settings</a>
+    </div>
+	</div>
+	<!--Profiles-->
+	
+	<div data-role="page" id="profile" >
+	
+		<div data-role="header"  data-position="fixed" style="overflow:hidden;">
+			<h4 style="font-style:bold;">VotIQ&trade; 
+			<a href="#info" data-role="button" data-icon="info" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-left">About</a>
+			<a href="#help" data-role="button" data-icon="alert" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-right">Help</a>
+			</h4>
+			<!--Nav Bar -->
+			<div data-role="navbar" data-iconpos="left">
+				<ul>
+					<li ><a  href="#home" data-icon="flat-home" title="View location" title="Find the Location your are at right now" class="ui-state-persist">Home</a></li>
+					<li ><a href="#profiles" href="#add" data-icon="flat-cmd" onclick="currentLoc()" title="Track your current Location" data-transition="slide" >Profiles</a></li>
+					<li ><a href="#polls" data-transition="slide"  data-icon="flat-new" data-iconpos="notext">Polls</a></li>
+					<li ><a href="#forum" data-transition="slide" data-icon="flat-location">Forum</a></li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		
+		<div data-role="content" style="margin-top:10px" >
+			
+      <ul  data-role="listview" data-filter-theme="e" data-autodividers="true" data-filter="true" data-filter-placeholder="Filter Profile..." data-inset="true">
+        <li data-role="list-divider" >Filter Profiles...</li>
+        <li>
+		  <div data-role="collapsible-set" data-theme="b" data-content-theme="b">
+			<div data-role="collapsible" data-collapsed-icon="flat-new" data-expanded-icon="flat-cross" data-collapsed="false">
+			  <h3>Angus</h3>
+			  <p>My name is Angus</p>
+			</div>
+			<div data-role="collapsible" data-collapsed-icon="flat-new" data-expanded-icon="flat-cross">
+			  <h3>Adewale</h3>
+			  <p>Oruku Adewale</p>
+			</div>
+			<div data-role="collapsible" data-collapsed-icon="flat-new" data-expanded-icon="flat-cross">
+			  <h3>Nnanna</h3>
+			  <p>Afam mu bu Nnanna</p>
+			</div>
+		  </div>
+		  </li>
+      </ul>
+		</div>
+	</div>
+    <div data-role="footer" data-position="fixed">
+			<h4 style="font-style:bold;">&copy; <script rel="javascript"> var g = new Date(); document.write(g.getFullYear());</script>, <span style="color:#13aa93">Team Green</span>
+			<a href="#settings" data-role="button" data-icon="flat-settings" data-iconpos="notext" data-transition="slidedown"  class="ui-btn-right">Settings</a>
+    </div>
+	</div>
+	<div data-role="page" id="polls" >
+	
+		<div data-role="header"  data-position="fixed" style="overflow:hidden;">
+			<h4 style="font-style:bold;">VotIQ&trade; 
+			<a href="#info" data-role="button" data-icon="info" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-left">About</a>
+			<a href="#help" data-role="button" data-icon="alert" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-right">Help</a>
+			</h4>
+			<!--Nav Bar -->
+			<div data-role="navbar" data-iconpos="left">
+				<ul>
+					<li ><a  href="#home" data-icon="flat-menu" title="View location" title="Find the Location your are at right now" class="ui-state-persist">Home</a></li>
+					<li ><a href="#profiles" href="#add" data-icon="flat-cmd" onclick="currentLoc()" title="Track your current Location" data-transition="slide" >Profiles</a></li>
+					<li ><a href="#polls" data-transition="slide"  data-icon="flat-new" data-iconpos="notext">Polls</a></li>
+					<li ><a href="#forum" data-transition="slide" data-icon="flat-location">Forum</a></li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+	<div data-role="content" >
+	</div>
+    <div data-role="footer" data-position="fixed">
+			<h4 style="font-style:bold;">&copy; <script rel="javascript"> var g = new Date(); document.write(g.getFullYear());</script>, <span style="color:#13aa93">Team Green</span>
+			<a href="#info" data-role="button" data-icon="flat-settings" data-iconpos="notext" data-transition="slidedown"  class="ui-btn-right">Settings</a>
+    </div>
+	</div>
+	<div data-role="page" id="forum" >
+	
+		<div data-role="header"  data-position="fixed" style="overflow:hidden;">
+			<h4 style="font-style:bold;">VotIQ&trade; 
+			<a href="#info" data-role="button" data-icon="info" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-left">About</a>
+			<a href="#help" data-role="button" data-icon="alert" data-iconpos="notext" data-transition="slidedown"  data-rel="dialog"  class="ui-btn-right">Help</a>
+			</h4>
+			<!--Nav Bar -->
+			<div data-role="navbar" data-iconpos="left">
+				<ul>
+					<li ><a  href="#home" data-icon="flat-home" title="View location" title="Find the Location your are at right now" class="ui-state-persist">Home</a></li>
+					<li ><a href="#profiles" href="#add" data-icon="flat-cmd" onclick="currentLoc()" title="Track your current Location" data-transition="slide" >Profiles</a></li>
+					<li ><a href="#polls" data-transition="slide"  data-icon="flat-new" data-iconpos="notext">Polls</a></li>
+					<li ><a href="#forum" data-transition="slide" data-icon="flat-location">Forum</a></li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+	<div data-role="content" >
+	</div>
+    <div data-role="footer" data-position="fixed">
+			<h4 style="font-style:bold;">&copy; <script rel="javascript"> var g = new Date(); document.write(g.getFullYear());</script>, <span style="color:#13aa93">Team Green</span>
+			<a href="#info" data-role="button" data-icon="flat-settings" data-iconpos="notext" data-transition="slidedown"  class="ui-btn-right">Settings</a>
+    </div>
+	</div>
+
+</body>
+</html>
